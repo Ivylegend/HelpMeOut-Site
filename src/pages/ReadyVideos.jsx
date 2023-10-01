@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navlogo from "../assets/images/helplogo.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import copysmall from "../assets/images/copysmall.png";
 import fb from "../assets/images/fb.png";
 import whatsapp from "../assets/images/whatsapp.png";
@@ -12,8 +12,20 @@ import closeicon from "../assets/images/close-circle.png";
 import Footerlogo from "../assets/images/footerlogo.png";
 
 const ReadyVideos = () => {
+  const { id } = useParams();
   const [toggle, setToggle] = useState(false);
+  const [data, setData] = useState([]);
   const [editContent, setEditContent] = useState(false);
+
+  // let latestVid = data[data.length - 1];
+  // console.log(latestVid);
+
+  useEffect(() => {
+    fetch("https://help-me-out-extension.onrender.com/uploads")
+      .then((res) => res.json())
+      .then((data) => setData(data.data.slice(-1)));
+    console.log(data);
+  }, []);
 
   return (
     <section className="bg-white">
@@ -43,12 +55,15 @@ const ReadyVideos = () => {
           <div className="my-8">
             <p>Name</p>
             <span className="flex items-center gap-5">
-              <h2
-                contentEditable={editContent && true}
-                className="text-xl font-semibold"
-              >
-                Untitled_Video_20230927
-              </h2>
+              {data.map((item) => (
+                <h2
+                  key={item.id}
+                  contentEditable={editContent && true}
+                  className="text-xl font-semibold"
+                >
+                  {item.id}
+                </h2>
+              ))}
               <img
                 className="cursor-pointer"
                 onClick={() => setEditContent(true)}
@@ -72,8 +87,12 @@ const ReadyVideos = () => {
           {/* VIDEO URL */}
           <div className="mb-9">
             <h2 className="text-xl font-semibold mb-3">Video Url</h2>
-            <div className="py-2 px-2 w-[100%] bg-gray-100 rounded-lg flex justify-between items-center  border-[2px] border-black-500">
-              <p>http://localhost:5173/Untitled_Video_4a7a4a7a4a7a</p>
+            <div className="py-2 px-2 w-[100%] bg-gray-100 rounded-lg flex justify-between items-center gap-5  border-[2px] border-black-500">
+              {data.map((item) => (
+                <p className="overflow-hidden w-[80%] whitespace-nowrap">
+                  {item.url}
+                </p>
+              ))}
               <button className="rounded-lg bg-transparent border-[1px] border-black p-3 flex gap-3 items-center">
                 <img src={copysmall} /> Copy
               </button>
@@ -98,9 +117,12 @@ const ReadyVideos = () => {
         </div>
 
         {/* SECOND HALF */}
-        <div className="pl-8 border-l-2">
+        <div className="pl-8 border-l-2 flex-1">
           <div className="w-[100%]">
-            <img className="w-[100%]" src={videoImage} />
+            {/* <img className="w-[100%]" src={videoImage} /> */}
+            {data.map((item) => (
+              <video key={item.id} src={item.url}></video>
+            ))}
           </div>
         </div>
       </div>

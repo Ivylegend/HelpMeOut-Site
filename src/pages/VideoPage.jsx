@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navlogo from "../assets/images/helplogo.png";
 import edit from "../assets/images/edit.png";
 import fb from "../assets/images/fb.png";
@@ -11,6 +11,17 @@ import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const VideoPage = () => {
+
+  const [data, setData] = useState([]);
+  // const apiUrl = `https://help-me-out-extension.onrender.com/upload/${video_id}`;
+
+  useEffect(() => {
+    fetch("https://help-me-out-extension.onrender.com/uploads")
+      .then((res) => res.json())
+      .then((data) => setData(data.data));
+    console.log(data);
+  }, []);
+
   return (
     <section className="px-[100px] py-[50px] bg-white">
       <div className="mb-10 flex justify-between items-center">

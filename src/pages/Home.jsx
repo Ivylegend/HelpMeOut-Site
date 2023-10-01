@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navlogo from "../assets/images/helplogo.png";
 import Profile from "../assets/images/profile-circle.png";
 import link from "../assets/images/link.png";
@@ -9,6 +9,15 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://help-me-out-extension.onrender.com/uploads")
+      .then((res) => res.json())
+      .then((data) => setData(data.data));
+    console.log(data);
+  }, []);
+
   return (
     <section className="home bg-white">
       <div className="px-[100px] py-[50px] flex justify-between items-center">
@@ -42,23 +51,28 @@ const Home = () => {
       <div className="px-[100px] py-[40px]">
         <p className="text-lg font-medium mb-5">Recent Files</p>
         <div className="grid grid-cols-2 gap-[2rem]">
-          <div className="border-2 rounded-xl p-4">
-            <div className="rounded-xl w-[100%] h-[208px] object-cover">
-              <Link to={'/home/video'}>
-                <img src={frame} className="w-[100%]" />
-              </Link>
+          {data.map((item) => (
+            <div key={item.id} className="border-2 rounded-xl p-4">
+              <div className="rounded-xl w-[100%] h-[208px] object-cover">
+                <Link to={"/home/video"}>
+                  {/* <img src={frame} className="w-[100%]" /> */}
+                  <video
+                    className="w-[100%] h-[100%] object-cover"
+                    src={item.url}
+                    autoPlay
+                  ></video>
+                </Link>
+              </div>
+              <span className="flex my-[.5rem] justify-between">
+                <h3 className="font-semibold text-xl">{item.id}</h3>
+                <small className="flex gap-5">
+                  <img src={link} className="cursor-pointer" />
+                  <img src={more} className="cursor-pointer" />
+                </small>
+              </span>
+              <p className="date font-medium text-lg">{item.createdAt}</p>
             </div>
-            <span className="flex my-[.5rem] justify-between">
-              <h3 className="font-semibold text-xl">
-                How To Create Facebook Ad Listing
-              </h3>
-              <small className="flex gap-5">
-                <img src={link} className="cursor-pointer" />
-                <img src={more} className="cursor-pointer" />
-              </small>
-            </span>
-            <p className="date font-medium text-lg">SEPTEMBER 10, 2023</p>
-          </div>
+          ))}
           <div className="border-2 rounded-lg p-4"></div>
         </div>
       </div>
