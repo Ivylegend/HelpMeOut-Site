@@ -39,8 +39,8 @@ const ReadyVideos = () => {
           <img src={Navlogo} />
         </Link>
         <div className="flex gap-[48px] font-semibold">
-          <a href="/">Features</a>
-          <a href="/pages/about.html">How It Works</a>
+          <a href="/#features">Features</a>
+          <a href="/#works">How It Works</a>
         </div>
         <Link to={"/login"} className="font-bold text-lg blue">
           Get Started

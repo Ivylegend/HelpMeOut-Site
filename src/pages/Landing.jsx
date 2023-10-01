@@ -25,8 +25,8 @@ const Landing = () => {
       >
         <img src={Navlogo} />
         <div className="flex gap-[48px] font-semibold">
-          <a href="/">Features</a>
-          <a href="/pages/about.html">How It Works</a>
+          <a href="#features">Features</a>
+          <a href="#works">How It Works</a>
         </div>
         <Link to={"/login"} className="font-bold text-lg blue">
           Get Started
@@ -71,7 +71,7 @@ const Landing = () => {
       </section>
 
       {/* <!-- FEATURES --> */}
-      <section className="mb-[3rem] bg-white px-[100px] py-[80px]">
+      <section id="features" className="mb-[3rem] bg-white px-[100px] py-[80px]">
         <div className="text-center mb-[64px]">
           <h2 className="text-4xl font-bold">Features</h2>
           <p className="text-lg mt-[10px]">Key highlights of our extension</p>
@@ -122,7 +122,7 @@ const Landing = () => {
       </section>
 
       {/* <!-- HOW IT WORKS --> */}
-      <section id="how-it-works" className="bg-white px-[100px] py-[80px]">
+      <section id="works" className="bg-white px-[100px] py-[80px]">
         <h2 className="text-4xl font-bold text-center mb-[64px]">
           How It Works
         </h2>
