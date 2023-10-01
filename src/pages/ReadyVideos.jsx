@@ -13,6 +13,7 @@ import Footerlogo from "../assets/images/footerlogo.png";
 
 const ReadyVideos = () => {
   const [toggle, setToggle] = useState(false);
+  const [editContent, setEditContent] = useState(false);
 
   return (
     <section className="bg-white">
@@ -42,8 +43,17 @@ const ReadyVideos = () => {
           <div className="my-8">
             <p>Name</p>
             <span className="flex items-center gap-5">
-              <h2 className="text-xl font-semibold">Untitled_Video_20230927</h2>
-              <img src={edit} className="cursor-pointer" />
+              <h2
+                contentEditable={editContent && true}
+                className="text-xl font-semibold"
+              >
+                Untitled_Video_20230927
+              </h2>
+              <img
+                className="cursor-pointer"
+                onClick={() => setEditContent(true)}
+                src={edit}
+              />
             </span>
           </div>
 
